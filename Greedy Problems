@@ -1,0 +1,36 @@
+Greedy Problems : 
+
+
+PROBLEM 1 : 
+816
+Solution  : int maxProfitAssignment(vector<int>& difficulty, vector<int>& profit, vector<int>& worker) {
+        vector<pair<int,int>>jobs;
+        int n = difficulty.size();
+        for(int i = 0 ;i < n;i++){
+            jobs.push_back({difficulty[i],profit[i]});
+        }
+        sort(jobs.begin(),jobs.end());
+        sort(worker.begin(),worker.end());
+        int maxProfit = 0;
+        int ans = 0;
+        int i =0;
+        for(int j = 0; j < worker.size(); j++){
+            while( i < profit.size() && worker[j] >= jobs[i].first){
+                maxProfit = max(maxProfit, jobs[i].second);
+                i++;
+            }
+            ans += maxProfit;
+        }
+        return ans;
+
+    }
+
+A stronger worker can perform every job that a weaker worker can.
+Once the jobs are sorted by difficulty, we never need to revisit previously processed jobs.
+The answer for a worker is not the profit of the current job, but the maximum profit among all jobs they can perform.
+
+
+
+Question: Why is it safe to never move the job pointer backward?
+Answer: Because workers are processed in increasing order of skill. Every new worker can perform all jobs that previous workers could perform,
+so those jobs never need to be reconsidered. Only new jobs need to be checked, while bestProfit remembers the best profit seen so far.
