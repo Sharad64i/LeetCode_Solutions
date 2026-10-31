@@ -23,6 +23,8 @@ public:
 
 
 
+
+
 Magnetic Force Between Two Balls => same as agressive cow
 
 
@@ -55,5 +57,36 @@ public:
             }
         }
         return balls >= m;
+    }
+};
+
+
+
+
+
+
+
+
+
+Find Minimum in Rotated Sorted Array II
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int high = nums.size() - 1;
+        int low = 0;
+        while (high > low) {
+            int mid = low + (high - low) / 2;
+            if (nums[high] == nums[mid] && nums[mid] == nums[low]) {
+                high--;
+                low++;
+            } else if (nums[mid] <= nums[high]) {
+                high = mid;
+            } else if (nums[mid] > nums[high]) {
+                // left half is sorted
+                low = mid + 1;
+            }
+        }
+        return nums[low];
     }
 };
