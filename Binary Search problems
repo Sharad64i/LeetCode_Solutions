@@ -18,3 +18,42 @@ public:
         return nums[high];
     }
 };
+
+
+
+
+
+Magnetic Force Between Two Balls => same as agressive cow
+
+
+class Solution {
+public:
+    int maxDistance(vector<int>& position, int m) {
+        int n = position.size();
+        sort(position.begin(), position.end());
+        int high = position[n - 1] - position[0];
+        int low = 1;
+        int maxd = low;
+        while (high >= low) {
+            int mid = (high - low) / 2 + low;
+            if (check(position, m, mid)) {
+                maxd = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return maxd;
+    }
+    bool check(vector<int>& position, int m, int mid) {
+        int balls = 1;
+        int lastposition = position[0];
+        for (int i = 1; i < position.size(); i++) {
+            if (position[i] - lastposition >= mid) {
+                balls++;
+                lastposition = position[i];
+            }
+        }
+        return balls >= m;
+    }
+};
