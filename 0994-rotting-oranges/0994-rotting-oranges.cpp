@@ -1,15 +1,14 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        // Traverse all collect all the starting index put them inside a queue
-        // maintain a count of fresh oranges
-        //  make a direction array
-        //  start with the first level pop out front and check if there
-        //  neighhours are fresh rotten them and add them in the queue keep
-        //  doing it until no fresh oranges are left or no elements are left
-        //  inside the queue
-        queue<pair<int, int>> q;
+        /* there can be multiple rotten oranges so maintain a queue put all the
+         rotten oranges in a queue and maintain a count of fresh oranges
+        now all the elements stored in the queue are rotten for
+        round one make all there nerightours rotten and put them in the queue do
+        this till no more oranges could be rotten or no are remaining in the
+        queue maintain a */
         int fresh = 0;
+        queue<pair<int, int>> q;
         for (int i = 0; i < grid.size(); i++) {
             for (int j = 0; j < grid[0].size(); j++) {
                 if (grid[i][j] == 2) {
@@ -25,19 +24,19 @@ public:
             for (int i = 0; i < size; i++) {
                 auto [x, y] = q.front();
                 q.pop();
-                markallpush(grid, x, y, q, fresh);
+                makeallnearrotten(grid, q, x, y,fresh);
             }
             minutes++;
         }
-        if (fresh > 0) {
+        if(fresh > 0){
             return -1;
         }
         return minutes;
     }
-    void markallpush(vector<vector<int>>& grid, int x, int y,
-                     queue<pair<int, int>>& q, int& fresh) {
+    void makeallnearrotten(vector<vector<int>>& grid, queue<pair<int, int>>& q,
+                           int x, int y,int &fresh) {
         vector<int> dirx = {0, 0, -1, 1};
-        vector<int> diry = {1, -1, 0, 0};
+        vector<int> diry = {-1, 1, 0, 0};
         for (int i = 0; i < 4; i++) {
             int nx = x + dirx[i];
             int ny = y + diry[i];
